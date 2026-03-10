@@ -8,8 +8,13 @@ const router = express.Router();
 //OBTENER TODOS LOS USUARIOS
 router.get("/", usuarioController.findAll);
 
+router.get("/:id", usuarioController.findById);
+
 //CREAR USUARIOS
 router.post("/", usuarioController.create);
+
+router.post("/login", usuarioController.login);
+
 
 
 

@@ -39,6 +39,11 @@ Usuario.init(
             type: DataTypes.BOOLEAN,
             allowNull: false,
             defaultValue: false
+        },
+        password: {
+            type: DataTypes.STRING(50),
+            allowNull: false,
+            defaultValue: '123456'
         }
     },
     {

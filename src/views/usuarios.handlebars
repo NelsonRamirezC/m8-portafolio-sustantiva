@@ -1,0 +1,64 @@
+<header>
+    <h1 class="text-center py-3">Vista de usuarios.</h1>
+</header>
+
+<main class="container">
+    <h2>Listado de usuarios...</h2>
+
+    <ul id="usuarios">
+
+    </ul>
+
+</main>
+
+
+<script>
+
+    const listarUsuarios = (usuarios) => {
+
+        let elementos = "";
+        for(usuario of usuarios){
+            let {id, nombre, apellido, url } = usuario;
+            elementos += `
+            <li>ID: 
+            ${id}, ${nombre} ${apellido}
+            <a href="${url}">Ver más</a>           
+            </li>`
+        }
+
+        document.querySelector("#usuarios").innerHTML = elementos;
+
+    };
+
+
+    const getData = async (url) => {
+        try{
+            let response = await fetch(url);
+
+            let data = await response.json();
+
+            alert(data.message);
+            if(response.status == 200){
+                return data;
+            }
+
+        }catch(error){
+            console.log(error);
+            throw new Error("Error al intentar obtener los datos de la api...")
+        }
+
+    }
+
+    const init = async () => {
+        try{
+            let data = await getData("/api/usuarios");
+            listarUsuarios(data.usuarios);
+
+        }catch(error){
+            console.log(error);
+        }
+    };
+
+    init();
+
+</script>

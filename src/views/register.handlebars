@@ -25,6 +25,14 @@
                 <label for="nickname" class="form-label">Nickname</label>
                 <input type="text" class="form-control" id="nickname" name="nickname" placeholder="pedro.figueroa" required>
             </div>
+            <div class="col-md-6">
+                <label for="password" class="form-label">Password</label>
+                <input type="password" class="form-control" id="password" name="password" required>
+            </div>
+            <div class="col-md-6">
+                <label for="replyPassword" class="form-label">Repita password</label>
+                <input type="password" class="form-control" id="replyPassword" name="replyPassword" required>
+            </div>
             <div class="col-12 text-center">
                 <button type="submit" class="btn btn-primary">Registrar</button>
             </div>
@@ -44,16 +52,24 @@ formRegistroUsuario.addEventListener("submit", async (event) => {
 
     try{
 
+
+
         const myHeaders = new Headers();
         myHeaders.append("Content-Type", "application/json");
 
         const dataForm = new FormData(formRegistroUsuario);
+
+        if(dataForm.get("password") != dataForm.get("replyPassword")){
+            return alert("No coinciden los passwords ingresados!");
+        }
+
         let raw = {
             nombre: dataForm.get("nombre"),
             apellido: dataForm.get("apellido"),
             email: dataForm.get("email"),
             fecha_nacimiento: dataForm.get("fecha_nacimiento"),
-            nickname: dataForm.get("nickname")
+            nickname: dataForm.get("nickname"),
+            password: dataForm.get("password")
         }
 
 
@@ -65,11 +81,15 @@ formRegistroUsuario.addEventListener("submit", async (event) => {
         };
 
         let response = await fetch('/api/usuarios', requestOptions);
+
         let data = await response.json();
+
         alert(data.message);
-        if(response.status == 200){
+        if(response.status == 201){
             formRegistroUsuario.reset();
-            
+
+            location.href = "/login";
+    
         }else {
             //...
         }

@@ -7,3 +7,5 @@ CREATE TABLE Usuarios(
     nickname VARCHAR(50) NOT NULL UNIQUE,
     admin BOOLEAN NOT NULL DEFAULT false
 );
+
+alter table usuarios add password VARCHAR(50) not null default '123456';
