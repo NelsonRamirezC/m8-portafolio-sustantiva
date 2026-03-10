@@ -55,6 +55,29 @@ const create = async (req, res) => {
     }
 };
 
+const changeEmail = async (req, res) => {
+    try {
+        let { email, id} = req.body;
+
+        let usuario = await models.Usuario.findByPk(id);
+
+        console.log(usuario.email);
+
+        if(!usuario) return res.status(404).json({message: "no existe un usuario con ese id"});
+
+        if(usuario.email == email) return res.status(400).json({message: "Ha usado el mismo email ya registrado..."});
+
+        usuario.email = email;
+        await usuario.save();
+        
+        res.status(201).json({message: "Email actualizado con éxito."});
+
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({message: "Error al intentar crear el usuario."});
+    }
+};
+
 const login = async (req, res) => {
     try {
         let { email, password } = req.body;
@@ -82,5 +105,6 @@ export default {
     findAll,
     create,
     login,
-    findById
+    findById,
+    changeEmail
 }

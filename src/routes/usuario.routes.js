@@ -10,6 +10,9 @@ router.get("/", usuarioController.findAll);
 
 router.get("/:id", usuarioController.findById);
 
+
+router.patch("/email", usuarioController.changeEmail);
+
 //CREAR USUARIOS
 router.post("/", usuarioController.create);
 

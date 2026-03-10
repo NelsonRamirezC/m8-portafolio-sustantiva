@@ -1,3 +1,78 @@
 <header>
     <h1 class="text-center py-3">Perfil de usuario</h1>
 </header>
+
+<main class="container">
+    
+    <p>ID: {{usuario.id}}</p>
+    <p>Nombre: {{usuario.nombre}}</p>
+    <p>Apellido: {{usuario.apellido}}</p>
+    <p>Email: {{usuario.email}}</p>
+
+    <hr>
+
+    <section>
+        <p>Actualizar / Cambiar Email:</p>
+        <form id="formChangeEmail">
+            <div>
+                <input type="hidden" value="{{usuario.id}}" name="id">
+            </div>
+            <div>
+                <label class="form-label">Reemplaza por tu nuevo Email</label>
+                <input type="email" class="form-control" name="email" required value="{{usuario.email}}">
+                <button type="submit" class="btn btn-warning">Cambiar</button>
+            </div>
+        </form>
+    </section>
+    
+
+</main>
+
+
+<script>
+    const formChangeEmail = document.querySelector("#formChangeEmail");
+
+
+    formChangeEmail.addEventListener("submit", async (event) => {
+        event.preventDefault();
+
+        try{
+
+            const myHeaders = new Headers();
+            myHeaders.append("Content-Type", "application/json");
+
+            const dataForm = new FormData(formChangeEmail);
+
+            let raw = {
+                email: dataForm.get("email"),
+                id: dataForm.get("id"),
+            }
+
+            const requestOptions = {
+                method: "PATCH",
+                headers: myHeaders,
+                body: JSON.stringify(raw),
+                redirect: "follow"
+            };
+
+
+        let response = await fetch("/api/usuarios/email", requestOptions);
+
+        
+        let data = await response.json();
+
+        alert(data.message);
+
+        if(response.status==201){
+            location.reload();
+        }else {
+            //...
+        }
+            
+
+        }catch(error){
+            console.log(error);
+        }
+    });
+
+</script>

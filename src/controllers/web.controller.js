@@ -1,3 +1,5 @@
+import models from '../models/index.js';
+
 const home = async (req, res) => {
     try {
 
@@ -42,6 +44,27 @@ const login = async (req, res) => {
     }
 };
 
+
+const perfil = async (req, res) => {
+    try {
+
+        let id = req.params.id;
+
+        let usuario = await models.Usuario.findByPk(id, {
+            attributes: { exclude: ['password'] },
+        })
+
+        res.render("perfil", {
+            usuario: usuario.toJSON()
+        });
+        
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({message: "Error al intentar cargar la vista."});
+    }
+};
+
+
 export default {
-    register, login, home, usuarios
+    register, login, home, usuarios, perfil
 }
