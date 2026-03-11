@@ -17,9 +17,10 @@ app.use(morgan("dev"));
 
 //CONFIGURACIÓN HANDLEBARS
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
+
 const hbs = create({
 	partialsDir: [
-		"views/partials/",
+		path.join(__dirname, "./views/partials/")
 	],
 });
 
