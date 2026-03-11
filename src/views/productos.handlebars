@@ -1,0 +1,17 @@
+<header>
+    <h1 class="text-center py-3">Nuestros productos...</h1>
+</header>
+
+<main class="container">
+    <section>
+        <div class="row justify-cotent-evenly g-3 row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4">
+            {{#each productos }}
+            <div class="col">
+                {{> product_card 
+                    producto = this
+                }}
+            </div>
+            {{/each }} 
+        </div>
+    </section>
+</main>

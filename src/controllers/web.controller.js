@@ -67,6 +67,29 @@ const perfil = async (req, res) => {
 };
 
 
+
+const productos = async (req, res) => {
+    let id = req.params.id;
+    try {
+
+        let listaProductos= await models.Producto.findAll();
+
+        listaProductos = listaProductos.map(p => p.toJSON());
+
+        res.render("productos", {
+            productos: listaProductos
+        });
+        
+    } catch (error) {
+        console.log(error);
+
+        res.render("productos", {
+            error: "Error al intentar leer los productos, intente más tarde..."
+        });
+    }
+};
+
+
 export default {
-    register, login, home, usuarios, perfil
+    register, login, home, usuarios, perfil, productos
 }

@@ -5,8 +5,13 @@ import webController from '../controllers/web.controller.js';
 const router = express.Router();
 
 router.get(["/", "/home", "/inicio"], webController.home);
+
+//RUTAS DE USUARIOS
 router.get("/usuarios", webController.usuarios);
 router.get("/perfil/:id", webController.perfil);
+
+//RUTAS DE PRODUCTOS
+router.get("/productos", webController.productos);
 
 
 router.get("/register", webController.register);

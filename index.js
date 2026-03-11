@@ -7,7 +7,7 @@ import './src/models/index.js';
 
 const init = async () => {
     try {
-        await sequelize.sync({force: false, true: false});
+        await sequelize.sync({force: false, alter: false});
 
         app.listen(3000, () => {
             console.log("Servidor escuchando en http://localhost:3000") 
