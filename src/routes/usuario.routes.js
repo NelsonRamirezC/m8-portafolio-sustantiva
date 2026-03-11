@@ -11,12 +11,17 @@ router.get("/", usuarioController.findAll);
 router.get("/:id", usuarioController.findById);
 
 
+//RUTA PARA ACTUALIZAR EMAIL
 router.patch("/email", usuarioController.changeEmail);
 
 //CREAR USUARIOS
 router.post("/", usuarioController.create);
 
 router.post("/login", usuarioController.login);
+
+//RUTA PARA ELIMINAR USUARIO
+
+router.delete("/:id", usuarioController.deleteUser);
 
 
 

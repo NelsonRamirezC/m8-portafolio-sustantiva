@@ -101,10 +101,27 @@ const login = async (req, res) => {
 };
 
 
+const deleteUser = async (req, res) => {
+    try {
+        
+        let id = req.params.id;
+
+        await models.Usuario.destroy({where: {id}});
+        
+        res.json({message: "Cuenta eliminada con éxito."});
+        
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({message: "Error al intentar eliminar la cuenta de usuario."});
+    }
+};
+
+
 export default {
     findAll,
     create,
     login,
     findById,
-    changeEmail
+    changeEmail,
+    deleteUser
 }

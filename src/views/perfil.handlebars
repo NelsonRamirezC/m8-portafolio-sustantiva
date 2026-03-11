@@ -3,40 +3,39 @@
 </header>
 
 <main class="container">
-    
-    <p>ID: {{usuario.id}}</p>
-    <p>Nombre: {{usuario.nombre}}</p>
-    <p>Apellido: {{usuario.apellido}}</p>
-    <p>Email: {{usuario.email}}</p>
 
-    <hr>
+    <section>
+        <p>ID: {{usuario.id}}</p>
+        <p>Nombre: {{usuario.nombre}}</p>
+        <p>Apellido: {{usuario.apellido}}</p>
+        <p>Email: {{usuario.email}}</p>
+    </section>
+
+    <hr />
 
     <section>
         <p>Actualizar / Cambiar Email:</p>
         <form id="formChangeEmail">
             <div>
-                <input type="hidden" value="{{usuario.id}}" name="id">
+                <input type="hidden" value="{{usuario.id}}" name="id" />
             </div>
             <div>
                 <label class="form-label">Reemplaza por tu nuevo Email</label>
-                <input type="email" class="form-control" name="email" required value="{{usuario.email}}">
+                <input type="email" class="form-control" name="email" required value="{{usuario.email}}" />
                 <button type="submit" class="btn btn-warning">Cambiar</button>
             </div>
         </form>
     </section>
-    
+    <section class="d-flex justify-content-center py-5">
+        <button class="btn btn-danger" id="btn-delete" data-id="{{usuario.id}}">Eliminar cuenta</button>
+    </section>
 
 </main>
 
-
 <script>
     const formChangeEmail = document.querySelector("#formChangeEmail");
-
-
     formChangeEmail.addEventListener("submit", async (event) => {
-        event.preventDefault();
-
-        try{
+        event.preventDefault(); try {
 
             const myHeaders = new Headers();
             myHeaders.append("Content-Type", "application/json");
@@ -47,30 +46,49 @@
                 email: dataForm.get("email"),
                 id: dataForm.get("id"),
             }
-
             const requestOptions = {
-                method: "PATCH",
-                headers: myHeaders,
-                body: JSON.stringify(raw),
-                redirect: "follow"
+                method: "PATCH", headers:
+                    myHeaders, body: JSON.stringify(raw), redirect: "follow"
             };
 
+            let response = await fetch("/api/usuarios/email", requestOptions);
+            let data = await response.json();
+            alert(data.message);
 
-        let response = await fetch("/api/usuarios/email", requestOptions);
-
-        
-        let data = await response.json();
-
-        alert(data.message);
-
-        if(response.status==201){
-            location.reload();
-        }else {
-            //...
+            if (response.status == 201) {
+                location.reload();
+            } else {
+                /* */
+            }
+        } catch (error) { 
+            console.log(error); 
         }
-            
+    });
 
-        }catch(error){
+
+
+    /* EVENTO ELIMINAR CUENTA */
+    const btnDelete = document.querySelector("#btn-delete");
+    btnDelete.addEventListener("click", async (event)=> {
+
+        try {
+            let confirmacion = confirm("Está seguro que desea eliminar su cuenta?");
+
+            if(confirmacion){
+                //pasos para eliminar cuenta
+                let id = btnDelete.dataset.id;
+                const response = await fetch("/api/usuarios/"+id, { method: "DELETE"});
+                const data = await response.json();
+
+                if(response.status == 200){
+                    alert(data.message);
+                    location.href = "/";
+                }else {
+                    alert(data.message);
+                }
+            }
+
+        } catch (error) {
             console.log(error);
         }
     });
