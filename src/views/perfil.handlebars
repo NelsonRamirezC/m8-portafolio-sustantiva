@@ -4,6 +4,12 @@
 
 <main class="container">
 
+    {{#if error}}
+        <p>{{error}}</p>
+        <a href="/" class="btn btn-primary">Volver a la página principal</a>
+
+    {{else}} 
+    
     <section>
         <p>ID: {{usuario.id}}</p>
         <p>Nombre: {{usuario.nombre}}</p>
@@ -29,6 +35,7 @@
     <section class="d-flex justify-content-center py-5">
         <button class="btn btn-danger" id="btn-delete" data-id="{{usuario.id}}">Eliminar cuenta</button>
     </section>
+    {{/if}}
 
 </main>
 

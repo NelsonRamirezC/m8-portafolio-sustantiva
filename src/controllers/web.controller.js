@@ -46,13 +46,12 @@ const login = async (req, res) => {
 
 
 const perfil = async (req, res) => {
+    let id = req.params.id;
     try {
-
-        let id = req.params.id;
 
         let usuario = await models.Usuario.findByPk(id, {
             attributes: { exclude: ['password'] },
-        })
+        });
 
         res.render("perfil", {
             usuario: usuario.toJSON()
@@ -60,7 +59,10 @@ const perfil = async (req, res) => {
         
     } catch (error) {
         console.log(error);
-        res.status(500).json({message: "Error al intentar cargar la vista."});
+
+        res.render("perfil", {
+            error: "No existe ningún usuario con el id: " + id
+        });
     }
 };
 
