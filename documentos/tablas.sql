@@ -24,3 +24,9 @@ INSERT into productos(nombre, precio, stock) values
 ('Televisor Samsung 50 Pulgadas', 250000, 250),
 ('Televisor LG 50 Pulgadas', 230000, 200);
 
+
+create table Ventas(
+	id SERIAL primary key,
+	fecha DATE not null default now(),
+	id_usuario INTEGER not null references usuarios(id)
+);

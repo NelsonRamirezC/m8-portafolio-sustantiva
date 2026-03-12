@@ -3,8 +3,6 @@ import app from './src/app.js';
 
 import './src/models/index.js';
 
-
-
 const init = async () => {
     try {
         await sequelize.sync({force: false, alter: false});
@@ -14,7 +12,7 @@ const init = async () => {
         });
         
     } catch (error) {
-        
+        console.log(error);
     }
 };
 
