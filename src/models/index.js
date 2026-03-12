@@ -1,6 +1,7 @@
 import Usuario from './Usuario.model.js';
 import Producto from './Producto.model.js';
 import Venta from './Venta.model.js';
+import DetalleVenta from './DetalleVenta.model.js';
 
 
 Usuario.hasMany(Venta, {
@@ -9,8 +10,20 @@ Usuario.hasMany(Venta, {
 });
 
 Venta.belongsTo(Usuario, {
-    foreignKey: 'id_usuario',
+    foreignKey: "id_usuario",
     as: "usuario"
+});
+
+
+//RELACIÓN 1 A MUCHOS ENTRE VENTA Y DETALLE_VENTA
+Venta.hasMany(DetalleVenta, {
+    foreignKey: "id_venta",
+    as: "detalle"
+});
+
+DetalleVenta.belongsTo(Venta, {
+    foreignKey: "id_venta",
+    as: "venta"
 });
 
 export default {

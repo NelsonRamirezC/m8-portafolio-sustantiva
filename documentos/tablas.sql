@@ -30,3 +30,17 @@ create table Ventas(
 	fecha DATE not null default now(),
 	id_usuario INTEGER not null references usuarios(id)
 );
+
+insert into ventas values
+(default, default, 2);
+
+select * from VENTAS;
+
+
+create table detalle_ventas(
+	id serial primary key,
+	id_venta integer not null references ventas(id),
+	id_producto integer not null references productos(id),
+	cantidad integer not null default 1 check (cantidad >0),
+	precio NUMERIC(11,2) not null check(precio > 0)
+);
