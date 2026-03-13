@@ -2,6 +2,7 @@ import Usuario from './Usuario.model.js';
 import Producto from './Producto.model.js';
 import Venta from './Venta.model.js';
 import DetalleVenta from './DetalleVenta.model.js';
+import Carrito from './Carrito.model.js';
 
 
 Usuario.hasMany(Venta, {
@@ -26,8 +27,47 @@ DetalleVenta.belongsTo(Venta, {
     as: "venta"
 });
 
+//RELACIÓN 1 A MUCHOS ENTRE PRODUCTO Y DETALLE_VENTA
+Producto.hasMany(DetalleVenta, {
+    foreignKey: "id_producto",
+    as: "detalle"
+});
+
+DetalleVenta.belongsTo(Producto, {
+    foreignKey: "id_producto",
+    as: "producto"
+});
+
+
+//RELACIÓN 1 A MUCHOS ENTRE CARRITO Y USUARIO
+Usuario.hasMany(Carrito, {
+    foreignKey: "id_usuario",
+    as: "carrito"
+});
+
+Carrito.belongsTo(Usuario, {
+    foreignKey: "id_venta",
+    as: "usuario"
+});
+
+//RELACIÓN 1 A MUCHOS ENTRE CARRITO Y PRODUCTO
+
+Producto.hasMany(Carrito, {
+    foreignKey: "id_producto",
+    as: "carrito"
+});
+
+Carrito.belongsTo(Producto, {
+    foreignKey: "id_producto",
+    as: "producto"
+});
+
+
+
 export default {
     Usuario,
     Producto,
-    Venta
+    Venta,
+    DetalleVenta,
+    Carrito
 };

@@ -44,3 +44,17 @@ create table detalle_ventas(
 	cantidad integer not null default 1 check (cantidad >0),
 	precio NUMERIC(11,2) not null check(precio > 0)
 );
+
+insert into detalle_ventas values
+(default, 1, 1, 2, 250000);
+
+create table carritos(
+	id serial primary key,
+	id_usuario integer not null references usuarios(id),
+	id_producto integer not null references productos(id),
+	cantidad integer not null default 1 check (cantidad >0)
+);
+
+insert into carritos values
+(default, 3, 1, 2),
+(default, 3, 2, 5);

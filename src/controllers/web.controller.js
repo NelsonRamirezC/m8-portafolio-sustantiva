@@ -95,6 +95,67 @@ const productos = async (req, res) => {
     }
 };
 
+
+const ventas = async (req, res) => {
+    try {
+
+        let ventas = await models.Venta.findAll({
+            include: [
+                {
+                    model: models.Usuario,
+                    as: 'usuario',
+                    attributes: {exclude: ['password', 'fecha_nacimiento', 'admin']}
+                },
+                {
+                    model: models.DetalleVenta,
+                    as: 'detalle',
+                    include: [
+                        {
+                            model: models.Producto,
+                            as: 'producto'
+                        }
+                    ]
+                }
+            ]
+        });
+
+        ventas = ventas.map((v) => {
+            v = v.toJSON();
+
+            const objFormateado = {
+                id_venta: v.id,
+                fecha: v.fecha,
+                usuario: `${v.usuario.nombre} ${v.usuario.apellido}`,
+                email: v.usuario.email,
+                detalle: v.detalle.map(d => {
+                    return {
+                        id_detalle: d.id,
+                        producto: d.producto.nombre,
+                        cantidad: d.cantidad,
+                        precio: Number(d.precio).toLocaleString("es-CL"),
+                        subtotal: d.cantidad * Number(d.precio),
+                        subtotalStr: (d.cantidad * Number(d.precio)).toLocaleString("es-CL"),
+                    }
+                })
+            }
+            console.log(objFormateado)
+
+            objFormateado.total = (objFormateado.detalle.reduce((accumulator, currentValue) => accumulator + currentValue.subtotal, 0)).toLocaleString("es-CL");
+
+            return objFormateado;
+        });
+
+
+        res.render("ventas", {
+            ventas
+        });
+
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ message: "Error al intentar cargar la vista." });
+    }
+};
+
 export default {
     register,
     login,
@@ -102,4 +163,6 @@ export default {
     usuarios,
     perfil,
     productos,
+    ventas
+    
 };
