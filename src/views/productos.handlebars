@@ -23,3 +23,35 @@
         </div>
     </section>
 </main>
+
+
+<script>
+
+    const agregarProducto = async (id_producto) => {
+        if(usuario){
+            const cantidadCarritoEl = document.querySelector("#cantidad-carrito");
+            console.log("id", id_producto);
+
+            //ruta -> "/api/carritos/add/:id_usuario/:id_producto"
+            
+            try {
+                let response = await fetch(`/api/carritos/add/${usuario.id}/${id_producto}`, {method: "POST"});
+
+                let data = await response.json();
+
+                if(response.status == 201){
+                    alert(data.message);
+                    let cantidad = Number(cantidadCarritoEl.textContent) + 1;
+                    cantidadCarritoEl.textContent = cantidad;
+                }
+
+            } catch (error) {
+                console.log(error);
+            }
+
+
+        }
+        
+    };
+
+</script>

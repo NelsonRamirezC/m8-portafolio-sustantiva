@@ -2,6 +2,8 @@ import express from 'express';
 import morgan from 'morgan';
 import usuarioRoutes from './routes/usuario.routes.js';
 import webRoutes from './routes/web.routes.js';
+import carritoRoutes from './routes/carrito.routes.js';
+
 import { create } from 'express-handlebars';
 import * as path from "path";
 import { fileURLToPath } from "url";
@@ -37,6 +39,7 @@ app.use("/", webRoutes);
 
 //API USUARIOS
 app.use("/api/usuarios", usuarioRoutes);
+app.use("/api/carritos", carritoRoutes);
 
 
 //EXPORTAR SERVIDOR

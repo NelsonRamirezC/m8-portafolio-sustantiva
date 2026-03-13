@@ -10,11 +10,11 @@ Carrito.init(
             primaryKey: true,
             autoIncrement: true,
         },
-        id_cliente: {
+        id_usuario: {
             type: DataTypes.INTEGER,
             allowNull: false,
             references: {
-                model: "clientes",
+                model: "usuarios",
                 key: "id",
             },
         },

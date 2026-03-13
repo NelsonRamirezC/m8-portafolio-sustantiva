@@ -46,7 +46,7 @@ Usuario.hasMany(Carrito, {
 });
 
 Carrito.belongsTo(Usuario, {
-    foreignKey: "id_venta",
+    foreignKey: "id_usuario",
     as: "usuario"
 });
 

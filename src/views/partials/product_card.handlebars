@@ -8,7 +8,12 @@
         <p class="card-text">Precio: {{producto.precio}}</p>
         <p class="card-text">Stock: {{producto.stock}}</p>
 
-        <a href="" class="btn btn-primary">Ver más</a>
+        <div class="d-flex justify-content-between">
+            <a href="" class="btn btn-primary">Ver más</a>
+            <button class="btn btn-success" onclick="agregarProducto('{{producto.id}}')">Agregar Carrito</button> 
+        </div>
+        
+
     </div>
 </div>
 
