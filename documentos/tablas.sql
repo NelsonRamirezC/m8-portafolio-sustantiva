@@ -10,6 +10,8 @@ CREATE TABLE Usuarios(
 
 alter table usuarios add password VARCHAR(50) not null default '123456';
 
+alter table usuarios add avatar VARCHAR(150) not null default 'avatar_default.jpg';
+
 
 create table Productos(
 	id SERIAL primary key,

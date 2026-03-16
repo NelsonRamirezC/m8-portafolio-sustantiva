@@ -3,6 +3,9 @@ import morgan from 'morgan';
 import usuarioRoutes from './routes/usuario.routes.js';
 import webRoutes from './routes/web.routes.js';
 import carritoRoutes from './routes/carrito.routes.js';
+import mediaRoutes from './routes/media.routes.js';
+
+import fileUpload from 'express-fileupload';
 
 import { create } from 'express-handlebars';
 import * as path from "path";
@@ -15,6 +18,7 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({extended:true}));
 app.use(morgan("dev"));
+app.use(fileUpload());
 
 
 //CONFIGURACIÓN HANDLEBARS
@@ -40,7 +44,7 @@ app.use("/", webRoutes);
 //API USUARIOS
 app.use("/api/usuarios", usuarioRoutes);
 app.use("/api/carritos", carritoRoutes);
-
+app.use("/media", mediaRoutes);
 
 //EXPORTAR SERVIDOR
 export default app;

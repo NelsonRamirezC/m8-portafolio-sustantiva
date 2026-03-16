@@ -50,7 +50,7 @@
 
     }
 
-    const init = async () => {
+    const initUsuariosView = async () => {
         try{
             let data = await getData("/api/usuarios");
 
@@ -63,6 +63,6 @@
         }
     };
 
-    init();
+    initUsuariosView();
 
 </script>

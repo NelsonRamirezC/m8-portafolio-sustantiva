@@ -1,4 +1,5 @@
 import models from '../models/index.js';
+import fs from 'fs';
 
 const findAll = async (req, res) => {
     try {
@@ -43,14 +44,18 @@ const findById = async (req, res) => {
 const create = async (req, res) => {
     try {
         let { nombre, apellido, email, fecha_nacimiento, nickname, password } = req.body;
-
+        let avatar = req.nombreImagen;
         
-        let usuario = await models.Usuario.create({nombre, apellido, email, fecha_nacimiento, nickname, password});
+        let usuario = await models.Usuario.create({nombre, apellido, email, fecha_nacimiento, nickname, password, avatar});
+
 
         res.status(201).json({usuario, message: "Usuario creado con éxito."});
 
     } catch (error) {
         console.log(error);
+
+        fs.unlinkSync(req.pathAvatar)
+
         res.status(500).json({message: "Error al intentar crear el usuario."});
     }
 };

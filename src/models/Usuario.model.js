@@ -44,6 +44,11 @@ Usuario.init(
             type: DataTypes.STRING(50),
             allowNull: false,
             defaultValue: '123456'
+        },
+        avatar: {
+            type: DataTypes.STRING(150),
+            allowNull: false,
+            defaultValue: 'avatar_default.jpg'
         }
     },
     {
