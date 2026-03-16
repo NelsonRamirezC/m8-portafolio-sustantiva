@@ -18,6 +18,10 @@
 
         let elementos = "";
         for(usuario of usuarios){
+            
+            if(!usuario.status){
+                continue;
+            }
             let {id, nombre, apellido, url } = usuario;
             elementos += `
             <li>ID: 

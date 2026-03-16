@@ -2,6 +2,7 @@
     <h1 class="text-center py-3">Perfil de usuario</h1>
 </header>
 
+{{#if usuario.status}}
 <main class="container">
 
     {{#if error}}
@@ -9,6 +10,10 @@
         <a href="/" class="btn btn-primary">Volver a la página principal</a>
 
     {{else}} 
+
+    <div>
+        
+    </div>
     
     <section>
         <p>ID: {{usuario.id}}</p>
@@ -42,6 +47,14 @@
     {{/if}}
 
 </main>
+
+{{else }}
+
+<main class="container">
+    <h2>El usuario no se encuentra activo...</h2>
+</main>
+
+{{/if }}
 
 <script>
     const formChangeEmail = document.querySelector("#formChangeEmail");

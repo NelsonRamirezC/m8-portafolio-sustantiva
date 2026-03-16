@@ -4,7 +4,7 @@ import fs from 'fs';
 const findAll = async (req, res) => {
     try {
         let usuarios = await models.Usuario.findAll({
-            attributes: ['id', 'nombre', 'apellido'],
+            attributes: ['id', 'nombre', 'apellido', 'status'],
         });
 
         usuarios = usuarios.map(u => {
@@ -111,9 +111,19 @@ const deleteUser = async (req, res) => {
         
         let id = req.params.id;
 
-        await models.Usuario.destroy({where: {id}});
+        //await models.Usuario.destroy({where: {id}});
+
+        let usuario = await models.Usuario.findByPk(id);
+
+        if(!usuario) return res.status(400).json({message: "El usuario ya no existe"});
+
+        if(!usuario.status) return res.status(400).json({message: "El usario se encuentra inactivo"});
+
+        usuario.status = false;
+
+        await usuario.save();
         
-        res.json({message: "Cuenta eliminada con éxito."});
+        res.json({message: "La cuenta del usuario ha quedado inactiva."});
         
     } catch (error) {
         console.log(error);

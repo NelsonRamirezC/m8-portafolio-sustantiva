@@ -12,6 +12,8 @@ alter table usuarios add password VARCHAR(50) not null default '123456';
 
 alter table usuarios add avatar VARCHAR(150) not null default 'avatar_default.jpg';
 
+alter table usuarios add status BOOLEAN not null default true;
+
 
 create table Productos(
 	id SERIAL primary key,
