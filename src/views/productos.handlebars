@@ -28,7 +28,7 @@
 <script>
 
     const agregarProducto = async (id_producto) => {
-        if(usuario){
+        if(usuarioStorage){
             const cantidadCarritoEl = document.querySelector("#cantidad-carrito");
             console.log("id", id_producto);
 
@@ -48,10 +48,22 @@
             } catch (error) {
                 console.log(error);
             }
+        }
+    };
 
 
+    const initProductosView = () => {
+
+        if(!usuarioStorage){
+            let btnssAddProduct = document.querySelectorAll(".btn-add-product");
+            
+            btnssAddProduct .forEach(b => b.classList.add("d-none"));
         }
         
     };
+
+    initProductosView();
+
+    
 
 </script>
