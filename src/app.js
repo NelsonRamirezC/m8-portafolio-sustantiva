@@ -4,6 +4,7 @@ import usuarioRoutes from './routes/usuario.routes.js';
 import webRoutes from './routes/web.routes.js';
 import carritoRoutes from './routes/carrito.routes.js';
 import mediaRoutes from './routes/media.routes.js';
+import ventaRoutes from './routes/venta.routes.js';
 
 import fileUpload from 'express-fileupload';
 
@@ -44,6 +45,8 @@ app.use("/", webRoutes);
 //API USUARIOS
 app.use("/api/usuarios", usuarioRoutes);
 app.use("/api/carritos", carritoRoutes);
+app.use("/api/ventas", ventaRoutes);
+
 app.use("/media", mediaRoutes);
 
 //EXPORTAR SERVIDOR

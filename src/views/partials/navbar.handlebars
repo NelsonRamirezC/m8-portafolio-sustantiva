@@ -46,7 +46,6 @@
         if(usuarioStorage){
             let response = await fetch("/api/carritos/cantidad/"+usuarioStorage.id);
             let data = await response.json();
-            console.log(data);
             document.querySelector("#cantidad-carrito").textContent = data.cantidad;
 
             //OCULTAR LINKS

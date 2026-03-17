@@ -39,7 +39,7 @@ DetalleVenta.init(
             allowNull: false,
             validate: {
                 isDecimal: true,
-                gt: 0,
+                min: 1,
             },
         },
     },
