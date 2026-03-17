@@ -1,6 +1,6 @@
 import models from "../models/index.js";
 import db from "../config/db.js";
-import { QueryTypes, Op } from "sequelize";
+import { QueryTypes, Op, where } from "sequelize";
 
 const home = async (req, res) => {
     try {
@@ -156,6 +156,47 @@ const ventas = async (req, res) => {
     }
 };
 
+const carrito = async (req, res) => {
+    try {
+        let id = req.params.id;
+
+        let carrito = await models.Carrito.findAll({
+            where: {
+                id_usuario: id
+            },
+            include: [
+                {
+                    model: models.Producto,
+                    as: "producto"
+                }
+            ]
+        });
+
+        carrito = carrito.map(c => {
+            c = c.toJSON();
+
+            c.subtotal = c.cantidad * c.producto.precio;
+
+            return c
+        });
+
+        let total = carrito.reduce((a, b) => a + b.subtotal, 0);
+        
+        console.log(carrito);
+
+        res.render("carrito", {
+            carrito,
+            total
+        });
+    } catch (error) {
+        console.log(error);
+        res.render("carrito", {
+            error: "Error al intentar obtener los datos del carrito."
+        });
+    }
+};
+
+
 export default {
     register,
     login,
@@ -163,6 +204,7 @@ export default {
     usuarios,
     perfil,
     productos,
-    ventas
+    ventas,
+    carrito
     
 };

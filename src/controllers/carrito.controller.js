@@ -51,8 +51,25 @@ const addProduct = async (req, res) => {
     }
 };
 
+
+const deleteProduct = async (req, res) => {
+    try {
+
+        let { id } = req.params;
+
+        await models.Carrito.destroy({where: {id}});
+
+        return res.status(200).json({message: "Se eliminó correctamente el producto del detalle."});
+
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({message: "Error al intentar elimianar el produvto."});
+    }
+};
+
 export default {
     addProduct,
-    cantidad
+    cantidad,
+    deleteProduct
 }
 

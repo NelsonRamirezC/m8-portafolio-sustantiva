@@ -21,7 +21,8 @@
                 <a class="nav-link" href="/login">Login</a>
                 <a class="nav-link" href="/register">Registro</a>
 
-                <a class="nav-link fw-bold" href="/carrito">Carrito: <span id="cantidad-carrito">0</span></a>
+                <a class="nav-link fw-bold" href="/carrito" id="carrito-link">Carrito: <span id="cantidad-carrito">0</span></a>
+                <a href="" id="logout-link" class="nav-link">Logout</a>
             </div>
         </div>
     </div>
@@ -29,6 +30,11 @@
 
 
 <script>
+
+    //ENLACES
+    const logoutLink = document.querySelector("#logout-link");
+    const carritoLink = document.querySelector("#carrito-link");
+
 
     const init = async () => {
         let usuario = JSON.parse(localStorage.getItem("usuario"));
@@ -41,4 +47,25 @@
         
     }
     init();
+
+
+    logoutLink.addEventListener("click", (event) => {
+        event.preventDefault();
+
+        localStorage.clear();
+        alert("Sesión cerrada correctamente.");
+        location.href = "/";
+
+    });
+
+
+    carritoLink.addEventListener("click", (event) => {
+        event.preventDefault();
+        let usuario = JSON.parse(localStorage.getItem("usuario"));
+        if(usuario){
+
+            location.href = "/carrito/"+usuario.id;
+        }
+    })
+
 </script>
