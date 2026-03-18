@@ -1,6 +1,6 @@
 import express from 'express';
 import webController from '../controllers/web.controller.js';
-
+import jwtVerifyView from '../auth/verify_token_views.js';
 
 const router = express.Router();
 
@@ -8,7 +8,8 @@ router.get(["/", "/home", "/inicio"], webController.home);
 
 //RUTAS DE USUARIOS
 router.get("/usuarios", webController.usuarios);
-router.get("/perfil/:id", webController.perfil);
+
+router.get("/perfil/:id", jwtVerifyView, webController.perfil);
 
 //RUTAS DE PRODUCTOS
 router.get("/productos", webController.productos);

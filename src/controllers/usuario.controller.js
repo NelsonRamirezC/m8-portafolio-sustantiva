@@ -1,5 +1,6 @@
 import models from '../models/index.js';
 import fs from 'fs';
+import jwt from 'jsonwebtoken';
 
 const findAll = async (req, res) => {
     try {
@@ -62,9 +63,11 @@ const create = async (req, res) => {
 
 const changeEmail = async (req, res) => {
     try {
-        let { email, id} = req.body;
+        let { email } = req.body;
 
-        let usuario = await models.Usuario.findByPk(id);
+        let dataUsuarioAuth = req.usuarioAuth;
+
+        let usuario = await models.Usuario.findByPk(dataUsuarioAuth.id);
 
         console.log(usuario.email);
 
@@ -87,7 +90,6 @@ const login = async (req, res) => {
     try {
         let { email, password } = req.body;
 
-        
         let usuario = await models.Usuario.findOne(
             {
                 where: { email, password },
@@ -97,7 +99,16 @@ const login = async (req, res) => {
 
         if(!usuario) return res.status(404).json({message: "Email y/o password incorrectos."});
 
-        res.json({usuario, message: "Login correcto."});
+        const token = jwt.sign({
+            id: usuario.id,
+            nombre: usuario.nombre,
+            apellido: usuario.apellido,
+            email: usuario.email,
+            nickname: usuario.nickname,
+            admin: usuario.admin
+        }, process.env.SECRET_KEY, { expiresIn: '1h' })
+
+        res.json({usuario, message: "Login correcto.", token});
 
     } catch (error) {
         console.log(error);

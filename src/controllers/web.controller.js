@@ -40,6 +40,10 @@ const login = async (req, res) => {
 
 const perfil = async (req, res) => {
     let id = req.params.id;
+    let userViewer = req.usuarioAuth;
+
+    let allowEdit = id == userViewer.id;
+
     try {
         let usuario = await models.Usuario.findByPk(id, {
             attributes: { exclude: ["password"] },
@@ -47,6 +51,8 @@ const perfil = async (req, res) => {
 
         res.render("perfil", {
             usuario: usuario.toJSON(),
+            userViewer,
+            allowEdit
         });
     } catch (error) {
         console.log(error);

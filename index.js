@@ -1,5 +1,6 @@
 import sequelize from './src/config/db.js';
 import app from './src/app.js';
+import 'dotenv/config';
 
 import './src/models/index.js';
 

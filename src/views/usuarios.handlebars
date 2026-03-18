@@ -26,7 +26,7 @@
             elementos += `
             <li>ID: 
             ${id}, ${nombre} ${apellido}
-            <a href="/perfil/${id}">Ver más</a>           
+            <a href="" data-id="${id}">Ver más</a>           
             </li>`
         }
 
@@ -69,4 +69,16 @@
 
     initUsuariosView();
 
+    const usuariosEl = document.querySelector("#usuarios");
+
+    usuariosEl.addEventListener("click", (event)=> {
+        event.preventDefault();
+        let element = event.target;
+        if(element.localName == "a"){
+            let id = element.dataset.id;
+            let token = localStorage.getItem("jwt");
+
+            location.href=`/perfil/${id}?token=${token}`;
+        }
+    });
 </script>

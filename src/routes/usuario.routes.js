@@ -1,6 +1,7 @@
 import express from 'express';
 import usuarioController from '../controllers/usuario.controller.js';
-import uploadImage from '../middlewares/uplodImage.js'
+import uploadImage from '../middlewares/uplodImage.js';
+import jwtVerifyApi from '../auth/verify_token_api.js'
 
 
 const router = express.Router();
@@ -13,7 +14,7 @@ router.get("/:id", usuarioController.findById);
 
 
 //RUTA PARA ACTUALIZAR EMAIL
-router.patch("/email", usuarioController.changeEmail);
+router.patch("/email", jwtVerifyApi, usuarioController.changeEmail);
 
 //CREAR USUARIOS
 router.post("/", uploadImage, usuarioController.create);

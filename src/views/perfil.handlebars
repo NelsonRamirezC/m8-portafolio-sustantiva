@@ -28,6 +28,8 @@
 
     <hr />
 
+
+    {{#if allowEdit}}
     <section>
         <p>Actualizar / Cambiar Email:</p>
         <form id="formChangeEmail">
@@ -44,6 +46,10 @@
     <section class="d-flex justify-content-center py-5">
         <button class="btn btn-danger" id="btn-delete" data-id="{{usuario.id}}">Eliminar cuenta</button>
     </section>
+
+    {{/if }}
+
+    
     {{/if}}
 
 </main>
@@ -61,8 +67,11 @@
     formChangeEmail.addEventListener("submit", async (event) => {
         event.preventDefault(); try {
 
+            let token = localStorage.getItem("jwt");
+
             const myHeaders = new Headers();
             myHeaders.append("Content-Type", "application/json");
+            myHeaders.append("Authorization", `Bearer ${token}`);
 
             const dataForm = new FormData(formChangeEmail);
 
